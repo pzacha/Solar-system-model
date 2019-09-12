@@ -13,8 +13,8 @@ timestamp = 600
 # Screen max width and height (screen is square)
 screen_size = 640
 max_dist = 10 ** 12
-# Orbits (0 -> off, 1 -> on)
-orbits = 1
+# Simulation length (in seconds) -> 2 years
+sim_length = 31556926*2
 
 class mass:
     """Mass"""
@@ -101,25 +101,31 @@ pygame.init()
 screen = pygame.display.set_mode((screen_size,screen_size))
 pygame.display.update()
 
-iter = 0
-for time in range(0, timestamp*365*24*6*2, timestamp):
-    if iter == 100:
+# Variable for screen refresh frequency
+iter = 0 
+
+
+for time in range(0, sim_length, timestamp):
+    
+    # Update screen and reset iter variable
+    if iter == 1000:
         pygame.display.update()
         screen.fill((0,0,0))
         iter = 0
     iter = iter + 1
+
     for obj in list_of_objects:
         # Calculate accelerartions
         obj.calc_acceleration()
         # Update properties of each planet
         obj.update_velocity_and_coordinates()
+        
         # Update screen every iter iterations
-        if iter == 100:
+        if iter == 1000:
             if obj == sun:
                 pygame.draw.circle(screen, (255,255,0), (norm_coords(sun.xcor),norm_coords(sun.ycor)), 10)
             elif obj == earth:
                 pygame.draw.circle(screen, (0,255,0), (norm_coords(obj.xcor),norm_coords(obj.ycor)), 4)
             else:
-                pygame.draw.circle(screen, (255,255,255), (norm_coords(obj.xcor),norm_coords(obj.ycor)), 3)
-            
-    
+                pygame.draw.circle(screen, (255,255,255), (norm_coords(obj.xcor),norm_coords(obj.ycor)), 3) 
+                60*60*24*365
