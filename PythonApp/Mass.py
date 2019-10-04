@@ -9,12 +9,12 @@ grav_const = 6.674 * 10**(-11)
 # Global list of objects
 list_of_objects = np.empty(0, dtype = object)
 # Timestamp
-timestamp = 600
+timestamp = 60
+# Simulation length (in seconds) -> 2 years
+sim_length = 31556926*2
 # Screen max width and height (screen is square)
 screen_size = 640
 max_dist = 10 ** 12
-# Simulation length (in seconds) -> 2 years
-sim_length = 31556926*2
 
 class mass:
     """Mass"""
@@ -96,36 +96,16 @@ list_of_objects = np.append(list_of_objects, [sun, earth])
 for i in range(2):
     list_of_objects = np.append(list_of_objects, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0))
 
-# Animation
-pygame.init()
-screen = pygame.display.set_mode((screen_size,screen_size))
-pygame.display.update()
-
-# Variable for screen refresh frequency
-iter = 0 
-
 
 for time in range(0, sim_length, timestamp):
     
-    # Update screen and reset iter variable
-    if iter == 1000:
-        pygame.display.update()
-        screen.fill((0,0,0))
-        iter = 0
-    iter = iter + 1
-
     for obj in list_of_objects:
         # Calculate accelerartions
         obj.calc_acceleration()
         # Update properties of each planet
         obj.update_velocity_and_coordinates()
-        
-        # Update screen every iter iterations
-        if iter == 1000:
-            if obj == sun:
-                pygame.draw.circle(screen, (255,255,0), (norm_coords(sun.xcor),norm_coords(sun.ycor)), 10)
-            elif obj == earth:
-                pygame.draw.circle(screen, (0,255,0), (norm_coords(obj.xcor),norm_coords(obj.ycor)), 4)
-            else:
-                pygame.draw.circle(screen, (255,255,255), (norm_coords(obj.xcor),norm_coords(obj.ycor)), 3) 
-                60*60*24*365
+       
+        # 1. Start new or load first coordinates from saved data.
+        # 2. Create variables for saving coordinates
+        # 3. Save coordinates
+        # 4. Save data on harddrive
