@@ -107,5 +107,5 @@ for time in range(0, sim_length, timestamp):
        
         # 1. Start new or load first coordinates from saved data.
         # 2. Create variables for saving coordinates
-        # 3. Save coordinates
+        # 3. Save coordinates (pickle?) Later maybe SQL
         # 4. Save data on harddrive
