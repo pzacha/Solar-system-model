@@ -2,7 +2,7 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 import random
-import pygame
+import sqlite3
 
 # Gravitational constant
 grav_const = 6.674 * 10**(-11)
@@ -15,6 +15,11 @@ sim_length = 31556926*2
 # Screen max width and height (screen is square)
 screen_size = 640
 max_dist = 10 ** 12
+
+#SQL database initialization
+conn = sqlite3.connect('earth.db')
+c = conn.cursor()
+
 
 class mass:
     """Mass"""
@@ -97,7 +102,7 @@ for i in range(2):
     list_of_objects = np.append(list_of_objects, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0))
 
 
-for time in range(0, sim_length, timestamp):
+for time in range(0, sim_length, round(sim_length/4)):#timestamp):
     
     for obj in list_of_objects:
         # Calculate accelerartions
@@ -105,7 +110,8 @@ for time in range(0, sim_length, timestamp):
         # Update properties of each planet
         obj.update_velocity_and_coordinates()
        
+
         # 1. Start new or load first coordinates from saved data.
         # 2. Create variables for saving coordinates
-        # 3. Save coordinates (pickle?) Later maybe SQL
+        # 3. Save coordinates to SQL db (pickle?)
         # 4. Save data on harddrive
