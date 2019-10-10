@@ -2,7 +2,6 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 import random
-import sqlite3
 
 # Gravitational constant
 grav_const = 6.674 * 10**(-11)
@@ -16,13 +15,8 @@ sim_length = 31556926*2
 screen_size = 640
 max_dist = 10 ** 12
 
-#SQL database initialization
-conn = sqlite3.connect('earth.db')
-c = conn.cursor()
-
-
 class mass:
-    """Mass"""
+    """Mass (mass, xcor, ycor, xvel, yvel, xacc, yacc)"""
 
     def __init__(self, mass, xcor, ycor, xvel, yvel, xacc, yacc):
         self.mass = mass
@@ -84,34 +78,6 @@ def norm_coords(coord):
         if abs(coord) > max_dist:
             # If distance is bigger than max_dist show the planet on the edge of the screen
             coord = 0
-        else:
-            
-            coord = screen_size/2 - abs(coord)/max_dist*screen_size/2
-        
-       
+        else:           
+            coord = screen_size/2 - abs(coord)/max_dist*screen_size/2       
     return int(round(coord))
-
-earth = mass(5.972 * (10 ** 24), 149600000000, 0, 0, 30000, 0, 0)
-sun = mass(1.989 * (10 ** 30), 0, 0, 0, 0, 0, 0)
-
-# Add Sun and Earth
-list_of_objects = np.append(list_of_objects, [sun, earth])
-
-# Add random objects
-for i in range(2):
-    list_of_objects = np.append(list_of_objects, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0))
-
-
-for time in range(0, sim_length, round(sim_length/4)):#timestamp):
-    
-    for obj in list_of_objects:
-        # Calculate accelerartions
-        obj.calc_acceleration()
-        # Update properties of each planet
-        obj.update_velocity_and_coordinates()
-       
-
-        # 1. Start new or load first coordinates from saved data.
-        # 2. Create variables for saving coordinates
-        # 3. Save coordinates to SQL db (pickle?)
-        # 4. Save data on harddrive
