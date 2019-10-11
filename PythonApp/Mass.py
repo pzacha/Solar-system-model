@@ -68,6 +68,6 @@ def create_mass_list(list):
     # Add Sun and Earth
     list = np.append(list, [sun, earth])
     # Add random objects
-    for i in range(0):
-        list = np.append(list, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object'))
+    for i in range(1):
+        list = np.append(list, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1)))
     return list

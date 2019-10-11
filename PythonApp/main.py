@@ -16,6 +16,7 @@ c = conn.cursor()
 if start_new == 1:
     c_e.execute("INSERT INTO solar_system VALUES (0, Earth , 149600000000, 0, 0, 30000)")
 
+#Create mass objects
 mass_list = create_mass_list(mass_list)
 
 iter = 0
@@ -28,8 +29,10 @@ for time in range(0, sim_length, timestamp):
         obj.update_velocity_and_coordinates()
         c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?)", (iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel))
 
+#Commit changes and close connection
 conn.commit()
 c.close()
 conn.close()
 
 #TODO
+#1. At the start of the program override database or continue from last point.
