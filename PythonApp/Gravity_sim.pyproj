@@ -5,7 +5,7 @@
     <ProjectGuid>65e763e2-85d3-44e0-8142-41bf3c6801de</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Mass.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +22,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Create_SQL_db.py">
+    <Compile Include="display.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SQL_fun.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py">

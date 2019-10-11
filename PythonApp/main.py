@@ -3,19 +3,33 @@ import math
 import matplotlib.pyplot as plt
 import random
 import sqlite3
+from Mass import *
+import SQL_fun
 
-# Gravitational constant
-grav_const = 6.674 * 10**(-11)
-# Global list of objects
-list_of_objects = np.empty(0, dtype = object)
-# Timestamp
-timestamp = 60
-# Simulation length (in seconds) -> 2 years
-sim_length = 31556926*2
-# Screen max width and height (screen is square)
-screen_size = 640
-max_dist = 10 ** 12
+# Create database if none exists
+SQL_fun.create_db()
 
-#SQL database initialization
-conn = sqlite3.connect('earth.db')
+# Connect to SQL database. (1 - start new db, 0 - load from db)
+start_new = 0 
+conn = sqlite3.connect('solar_system.db')
 c = conn.cursor()
+if start_new == 1:
+    c_e.execute("INSERT INTO solar_system VALUES (0, Earth , 149600000000, 0, 0, 30000)")
+
+mass_list = create_mass_list(mass_list)
+
+iter = 0
+for time in range(0, sim_length, timestamp):
+    iter = iter + 1
+    for obj in mass_list:
+        # Calculate accelerartions
+        obj.calc_acceleration(mass_list)
+        # Update properties of each planet
+        obj.update_velocity_and_coordinates()
+        c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?)", (iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel))
+
+conn.commit()
+c.close()
+conn.close()
+
+#TODO
