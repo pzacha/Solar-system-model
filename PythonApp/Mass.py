@@ -35,7 +35,6 @@ class mass:
         return [radius_x, radius_y, radius]
 
     def calc_force(self, obj):
-
         [radius_x, radius_y, radius] = self.calc_radius(obj)
         force = grav_const * self.mass * obj.mass / (radius ** 2)
         force_x = force * (radius_x / radius)
@@ -54,12 +53,12 @@ class mass:
         self.xacc = sum_force_x / self.mass
         self.yacc = sum_force_y / self.mass
 
-
     def update_velocity_and_coordinates(self):
         self.xvel = self.xvel + self.xacc * timestamp
         self.yvel = self.yvel + self.yacc * timestamp
         self.xcor = self.xcor + self.xvel * timestamp
         self.ycor = self.ycor + self.yvel * timestamp
+
 def create_mass_list(list):
     
     earth = mass(5.972 * (10 ** 24), 149600000000, 0, 0, 30000, 0, 0, 'Earth')

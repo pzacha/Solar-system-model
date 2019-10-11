@@ -15,6 +15,12 @@ def create_db():
     c.close()
     conn.close()
 
+#Commit changes and close connection
+def commit_and_close(cursor, connection):
+    connection.commit()
+    cursor.close()
+    connection.close()
+
 # TODO
 #c.execute("SELECT x FROM earth_data")
 # 2. Function that deletes database
