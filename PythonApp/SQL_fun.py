@@ -27,4 +27,5 @@ def create_db():
     conn.close()
 
 # TODO
+#c.execute("SELECT x FROM earth_data")
 # 2. Function that deletes database
