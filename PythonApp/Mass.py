@@ -5,8 +5,8 @@ import random
 
 # Gravitational constant
 grav_const = 6.674 * 10**(-11)
-# Global list of objects
-list_of_objects = np.empty(0, dtype = object)
+# Global mass list
+mass_list = np.empty(0, dtype = object)
 # Timestamp
 timestamp = 3600
 # Simulation length (in seconds) -> 2 years
@@ -18,7 +18,7 @@ max_dist = 10 ** 12
 class mass:
     """Mass (mass, xcor, ycor, xvel, yvel, xacc, yacc)"""
 
-    def __init__(self, mass, xcor, ycor, xvel, yvel, xacc, yacc):
+    def __init__(self, mass, xcor, ycor, xvel, yvel, xacc, yacc, name):
         self.mass = mass
         self.xcor = xcor
         self.ycor = ycor
@@ -26,6 +26,7 @@ class mass:
         self.yvel = yvel
         self.xacc = xacc
         self.yacc = yacc
+        self.name = name
 
     def calc_radius(self, obj):
         radius_x = obj.xcor - self.xcor
@@ -41,10 +42,10 @@ class mass:
         force_y = force * (radius_y / radius)
         return [force_x, force_y]
 
-    def calc_acceleration(self):
+    def calc_acceleration(self, mass_list):
         sum_force_x = 0
         sum_force_y = 0
-        for obj in list_of_objects:
+        for obj in mass_list:
             if obj is self:
                 continue
             [force_x, force_y] = self.calc_force(obj)
@@ -59,25 +60,14 @@ class mass:
         self.yvel = self.yvel + self.yacc * timestamp
         self.xcor = self.xcor + self.xvel * timestamp
         self.ycor = self.ycor + self.yvel * timestamp
-
-def norm_coords(coord):
-    """ Adjust coordinates to screen (0,0) = middle of the screen """
-    if coord == 0:
-        # Middle of the screen
-        coord = screen_size/2
-    elif coord >= 0:
-        # Right/top side of the screen
-        # If absolute distance is bigger than max_dist show the planet on the edge of the screen
-        if abs(coord) > max_dist:
-            coord = screen_size
-        else:
-            coord = screen_size/2 + coord/max_dist*screen_size/2
-    else:
-        # Left/bottom side of the screen
-        # If absolute distance is bigger than max_dist show the planet on the edge of the screen
-        if abs(coord) > max_dist:
-            # If distance is bigger than max_dist show the planet on the edge of the screen
-            coord = 0
-        else:           
-            coord = screen_size/2 - abs(coord)/max_dist*screen_size/2       
-    return int(round(coord))
+def create_mass_list(list):
+    
+    earth = mass(5.972 * (10 ** 24), 149600000000, 0, 0, 30000, 0, 0, 'Earth')
+    sun = mass(1.989 * (10 ** 30), 0, 0, 0, 0, 0, 0, 'Sun')
+    
+    # Add Sun and Earth
+    list = np.append(list, [sun, earth])
+    # Add random objects
+    for i in range(0):
+        list = np.append(list, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object'))
+    return list

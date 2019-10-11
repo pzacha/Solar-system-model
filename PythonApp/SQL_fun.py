@@ -2,22 +2,11 @@ import sqlite3
 
 #SQL database initialization
 def create_db():
-    conn = sqlite3.connect('sun.db')
+    conn = sqlite3.connect('solar_system.db')
     c = conn.cursor()
-    c.execute("""CREATE TABLE IF NOT EXISTS sun_data (
+    c.execute("""CREATE TABLE IF NOT EXISTS solar_system (
                 iter INT,
-                x FLOAT,
-                y FLOAT,
-                xvel FLOAT,
-                yvel FLOAT
-        )""")
-    c.close()
-    conn.close()
-
-    conn = sqlite3.connect('earth.db')
-    c = conn.cursor()
-    c.execute("""CREATE TABLE IF NOT EXISTS earth_data (
-                iter INT,
+                name CHAR,
                 x FLOAT,
                 y FLOAT,
                 xvel FLOAT,
