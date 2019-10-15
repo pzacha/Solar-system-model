@@ -33,30 +33,13 @@ def connect(start_new):
         # Add last row values (iter and coords)
     return [c, conn]
 
-def load_coords(name):
-    """Load x coordinates to table"""
-    conn = sqlite3.connect('solar_system.db')
-    c = conn.cursor()
-
-    c.execute("SELECT x FROM solar_system WHERE name = (?)", (name,))
-    x_cor = c.fetchall()
-    x_float = [i[0] for i in x_cor]
-    # Load y coordinates to table
-    c.execute("SELECT y FROM solar_system WHERE name = (?)", (name,))
-    y_cor = c.fetchall()
-    y_float = [i[0] for i in y_cor]
-
-    c.close()
-    conn.close()
-    return [x_float, y_float]
-
 def create_mass_names_db(mass_list):
     """SQL mass_name database creation"""
     conn = sqlite3.connect('mass_names.db')
     c = conn.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS mass_names (name TEXT)""")
     # Make sure database is empty
-    #c.execute("DELETE FROM mass_names")
+    c.execute("DELETE FROM mass_names")
     # Save data in SQL database
     for obj in mass_list:
         c.execute("INSERT INTO mass_names VALUES (?)", (obj.name,))
@@ -76,6 +59,23 @@ def get_mass_names():
     conn.close()
     return table
 
+def load_coords(name):
+    """Load x coordinates to table"""
+    conn = sqlite3.connect('solar_system.db')
+    c = conn.cursor()
+
+    c.execute("SELECT x FROM solar_system WHERE name = (?)", (name,))
+    x_cor = c.fetchall()
+    x_float = [i[0] for i in x_cor]
+    # Load y coordinates to table
+    c.execute("SELECT y FROM solar_system WHERE name = (?)", (name,))
+    y_cor = c.fetchall()
+    y_float = [i[0] for i in y_cor]
+
+    c.close()
+    conn.close()
+    return [x_float, y_float]
+
 def create_coords_table():
     """Create table with coordinates"""
     names = get_mass_names()
@@ -84,4 +84,4 @@ def create_coords_table():
         coords_table = np.append(coords_table, load_coords(name))
     return coords_table
 # TODO
-#c.execute("SELECT x FROM earth_data")
+#1. Create list of list, not list of coords or take iter value simlength/timestamp

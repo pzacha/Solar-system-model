@@ -24,7 +24,7 @@ def norm_coords(coord):
             coord = screen_size/2 - abs(coord)/max_dist*screen_size/2       
     return int(round(coord))
 
-def display():
+def display(coords_table):
     """Display solar system animation"""
     
     # Animation
@@ -33,9 +33,10 @@ def display():
     pygame.display.update()
 
     # Variable for screen refresh frequency
-    freq = 0 
+    freq = 0
 
-    # Update screen and reset iter variable
+    for 
+    # Update screen and reset freq variable
     if frq == 1000:
         pygame.display.update()
         screen.fill((0,0,0))
