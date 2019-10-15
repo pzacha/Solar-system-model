@@ -9,7 +9,7 @@ import SQL_db
 # Create mass objects
 mass_list = create_mass_list(mass_list)
 # Create database with mass names
-
+SQL_db.create_mass_name_db(mass_list)
 
 # Create database if none exists
 SQL_db.create_solar_db()
@@ -30,7 +30,7 @@ for time in range(0, sim_length, timestamp):
         obj.update_velocity_and_coordinates()
 
         # Save data in SQL database
-        c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?)", (iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel))
+        c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?)", (iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel,))
 
 # Commit changes and close connection
 SQL_db.commit_and_close(c, conn)

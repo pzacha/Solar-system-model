@@ -1,10 +1,10 @@
 import sqlite3
+import numpy as np
+import SQL_db
+import Mass
 
-conn = sqlite3.connect('solar_system.db')
-c = conn.cursor()
+mass_list = np.empty(0, dtype = object)
+mass_list = Mass.create_mass_list(mass_list)
+SQL_db.create_mass_name_db(mass_list)
 
-c.execute("SELECT x FROM solar_system")
-x_cor = c.fetchall()
-#c.fetchall("SELECT x FROM solar_system WHERE name = (?)", (object))
-y = [i[0] for i in x_cor]
-print(y)
+

@@ -1,7 +1,5 @@
 import sqlite3
-from SQL_db import load_coords
 import pygame
-import SQL_db
 import numpy
 
 def norm_coords(coord):
@@ -30,10 +28,10 @@ def norm_coords(coord):
 conn = sqlite3.connect('solar_system.db')
 c = conn.cursor()
 
-# Create table with coordinates
-coords_table = np.empty()
-for 
-coords_table = np.append(coords_table, SQL_db.load_coords(c, conn))
+## Create table with coordinates
+#coords_table = np.empty()
+#for 
+#coords_table = np.append(coords_table, SQL_db.load_coords(c, conn))
 
 # Animation
 pygame.init()

@@ -47,12 +47,12 @@ def create_mass_name_db(mass_list):
     """SQL mass_name database creation"""
     conn = sqlite3.connect('mass_names.db')
     c = conn.cursor()
-    c.execute("""CREATE TABLE IF NOT EXISTS mass_names (name CHAR)""")
+    c.execute("""CREATE TABLE IF NOT EXISTS mass_names (name TEXT)""")
     # Make sure database is empty
-    c.execute("DELETE FROM mass_names")
+    #c.execute("DELETE FROM mass_names")
     # Save data in SQL database
-    for mass in mass_list:
-        c.execute("INSERT INTO mass_names VALUES (?)", (mass.name))
+    for obj in mass_list:
+        c.execute("INSERT INTO mass_names VALUES (?)", (obj.name,))
     # Close connection and save database
     conn.commit()
     c.close()
