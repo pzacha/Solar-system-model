@@ -15,7 +15,7 @@ SQL_db.create_mass_name_db(mass_list)
 SQL_db.create_solar_db()
 
 # Connect to SQL database. (1 - start new db, 0 - load from db)
-start_new = 1 
+start_new = 1
 [c, conn] = SQL_db.connect(start_new)
 
 # Run simulation

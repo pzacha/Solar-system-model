@@ -1,4 +1,5 @@
 import sqlite3
+import numpy as np
 
 def create_solar_db():
     """SQL solar_system database creation"""
@@ -15,14 +16,14 @@ def create_solar_db():
     c.close()
     conn.close()
 
-def commit_and_close(cursor, connection):
+def commit_and_close(c, conn):
     """Commit changes and close connection"""
-    connection.commit()
-    cursor.close()
-    connection.close()
+    conn.commit()
+    c.close()
+    conn.close()
 
 def connect(start_new):
-    """Connect to database"""
+    """Connect to solar system database"""
     conn = sqlite3.connect('solar_system.db')
     c = conn.cursor()
     if start_new == 1:
@@ -32,18 +33,24 @@ def connect(start_new):
         # Add last row values (iter and coords)
     return [c, conn]
 
-def load_coords(c, conn, object):
+def load_coords(name):
     """Load x coordinates to table"""
-    c.execute("SELECT x FROM solar_system WHERE name = (?)", (object))
+    conn = sqlite3.connect('solar_system.db')
+    c = conn.cursor()
+
+    c.execute("SELECT x FROM solar_system WHERE name = (?)", (name,))
     x_cor = c.fetchall()
     x_float = [i[0] for i in x_cor]
     # Load y coordinates to table
-    c.execute("SELECT y FROM solar_system WHERE name = (?)", (object))
+    c.execute("SELECT y FROM solar_system WHERE name = (?)", (name,))
     y_cor = c.fetchall()
     y_float = [i[0] for i in y_cor]
+
+    c.close()
+    conn.close()
     return [x_float, y_float]
 
-def create_mass_name_db(mass_list):
+def create_mass_names_db(mass_list):
     """SQL mass_name database creation"""
     conn = sqlite3.connect('mass_names.db')
     c = conn.cursor()
@@ -57,5 +64,24 @@ def create_mass_name_db(mass_list):
     conn.commit()
     c.close()
     conn.close()
+
+def get_mass_names():
+    """Get mass names from database"""
+    conn = sqlite3.connect('mass_names.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM mass_names")
+    tab = c.fetchall()
+    table = [i[0] for i in tab]
+    c.close()
+    conn.close()
+    return table
+
+def create_coords_table():
+    """Create table with coordinates"""
+    names = get_mass_names()
+    coords_table = np.empty(0)
+    for name in names:
+        coords_table = np.append(coords_table, load_coords(name))
+    return coords_table
 # TODO
 #c.execute("SELECT x FROM earth_data")
