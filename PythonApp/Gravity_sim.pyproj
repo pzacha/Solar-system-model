@@ -25,13 +25,16 @@
     <Compile Include="display.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SQL_fun.py">
+    <Compile Include="SQL_db.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Mass.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="test.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

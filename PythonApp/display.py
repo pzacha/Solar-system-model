@@ -1,8 +1,11 @@
 import sqlite3
+from SQL_db import load_coords
 import pygame
+import SQL_db
+import numpy
 
 def norm_coords(coord):
-    """ Adjust coordinates to screen (0,0) = middle of the screen """
+    """Adjust coordinates to screen (0,0) = middle of the screen"""
     if coord == 0:
         # Middle of the screen
         coord = screen_size/2
@@ -22,6 +25,15 @@ def norm_coords(coord):
         else:           
             coord = screen_size/2 - abs(coord)/max_dist*screen_size/2       
     return int(round(coord))
+
+# Connect to database
+conn = sqlite3.connect('solar_system.db')
+c = conn.cursor()
+
+# Create table with coordinates
+coords_table = np.empty()
+for 
+coords_table = np.append(coords_table, SQL_db.load_coords(c, conn))
 
 # Animation
 pygame.init()

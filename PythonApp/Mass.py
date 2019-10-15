@@ -14,6 +14,8 @@ sim_length = 31556926*2
 # Screen max width and height (screen is square)
 screen_size = 640
 max_dist = 10 ** 12
+# Random mass objects number
+rand_mass_num = 1
 
 class mass:
     """Mass (mass, xcor, ycor, xvel, yvel, xacc, yacc)"""
@@ -60,13 +62,14 @@ class mass:
         self.ycor = self.ycor + self.yvel * timestamp
 
 def create_mass_list(list):
-    
+    """Create mass list"""
     earth = mass(5.972 * (10 ** 24), 149600000000, 0, 0, 30000, 0, 0, 'Earth')
     sun = mass(1.989 * (10 ** 30), 0, 0, 0, 0, 0, 0, 'Sun')
     
     # Add Sun and Earth
     list = np.append(list, [sun, earth])
+
     # Add random objects
-    for i in range(1):
-        list = np.append(list, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1)))
+    for i in range(rand_mass_num):
+        list = np.append(list, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1
     return list
