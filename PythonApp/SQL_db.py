@@ -1,5 +1,7 @@
-import sqlite3
 import numpy as np
+import sqlite3
+
+import globals
 
 def create_solar_db():
     """SQL solar_system database creation"""
@@ -77,7 +79,7 @@ def load_coords(name):
     return [x_float, y_float]
 
 def create_coords_table():
-    """Create table with coordinates"""
+    """Create table with coordinates and get iter value"""
     names = get_mass_names()
     coords_table = np.empty(0)
     for name in names:
@@ -85,3 +87,6 @@ def create_coords_table():
     return coords_table
 # TODO
 #1. Create list of list, not list of coords or take iter value simlength/timestamp
+
+def test_num():
+    globals.iter_num = globals.iter_num + 1

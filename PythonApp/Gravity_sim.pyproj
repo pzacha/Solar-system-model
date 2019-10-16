@@ -25,6 +25,9 @@
     <Compile Include="display.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="globals.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SQL_db.py">
       <SubType>Code</SubType>
     </Compile>

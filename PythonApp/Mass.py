@@ -3,19 +3,7 @@ import math
 import matplotlib.pyplot as plt
 import random
 
-# Gravitational constant
-grav_const = 6.674 * 10**(-11)
-# Global mass list
-mass_list = np.empty(0, dtype = object)
-# Timestamp
-timestamp = 3600
-# Simulation length (in seconds) -> 2 years
-sim_length = 31556926*2
-# Screen max width and height (screen is square)
-screen_size = 640
-max_dist = 10 ** 12
-# Random mass objects number
-rand_mass_num = 1
+import globals
 
 class mass:
     """Mass (mass, xcor, ycor, xvel, yvel, xacc, yacc)"""
@@ -38,7 +26,7 @@ class mass:
 
     def calc_force(self, obj):
         [radius_x, radius_y, radius] = self.calc_radius(obj)
-        force = grav_const * self.mass * obj.mass / (radius ** 2)
+        force = globals.grav_const * self.mass * obj.mass / (radius ** 2)
         force_x = force * (radius_x / radius)
         force_y = force * (radius_y / radius)
         return [force_x, force_y]
@@ -56,10 +44,10 @@ class mass:
         self.yacc = sum_force_y / self.mass
 
     def update_velocity_and_coordinates(self):
-        self.xvel = self.xvel + self.xacc * timestamp
-        self.yvel = self.yvel + self.yacc * timestamp
-        self.xcor = self.xcor + self.xvel * timestamp
-        self.ycor = self.ycor + self.yvel * timestamp
+        self.xvel = self.xvel + self.xacc * globals.timestamp
+        self.yvel = self.yvel + self.yacc * globals.timestamp
+        self.xcor = self.xcor + self.xvel * globals.timestamp
+        self.ycor = self.ycor + self.yvel * globals.timestamp
 
 def create_mass_list(list):
     """Create mass list"""
@@ -70,6 +58,6 @@ def create_mass_list(list):
     list = np.append(list, [sun, earth])
 
     # Add random objects
-    for i in range(rand_mass_num):
+    for i in range(globals.rand_mass_num):
         list = np.append(list, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1)))
     return list

@@ -1,15 +1,18 @@
 import numpy as np
 import math
+import sqlite3
 import matplotlib.pyplot as plt
 import random
-import sqlite3
-from Mass import *
+
+import globals
 import SQL_db
+from Mass import *
+import display
 
 # Create mass objects
-mass_list = create_mass_list(mass_list)
+globals.mass_list = create_mass_list(globals.mass_list)
 # Create database with mass names
-SQL_db.create_mass_name_db(mass_list)
+SQL_db.create_mass_names_db(globals.mass_list)
 
 # Create database if none exists
 SQL_db.create_solar_db()
@@ -20,11 +23,11 @@ start_new = 1
 
 # Run simulation
 iter = 0
-for time in range(0, sim_length, timestamp):
+for time in range(0, globals.sim_length, globals.timestamp):
     iter = iter + 1
-    for obj in mass_list:
+    for obj in globals.mass_list:
         # Calculate accelerartions
-        obj.calc_acceleration(mass_list)
+        obj.calc_acceleration(globals.mass_list)
 
         # Update properties of each planet
         obj.update_velocity_and_coordinates()
