@@ -1,6 +1,5 @@
 import numpy as np
 import sqlite3
-
 import globals
 
 def create_solar_db():
@@ -62,10 +61,15 @@ def get_mass_names():
     return table
 
 def load_coords(name):
-    """Load x coordinates to table"""
+    """Load x coordinates to table and update iter_num"""
     conn = sqlite3.connect('solar_system.db')
     c = conn.cursor()
 
+    # Update iter_num
+    c.execute("SELECT MAX(iter) FROM solar_system")
+    globals.iter_num = c.fetchone()[0]
+
+    # Load coords of object
     c.execute("SELECT x FROM solar_system WHERE name = (?)", (name,))
     x_cor = c.fetchall()
     x_float = [i[0] for i in x_cor]
@@ -85,8 +89,6 @@ def create_coords_table():
     for name in names:
         coords_table = np.append(coords_table, load_coords(name))
     return coords_table
+
 # TODO
 #1. Create list of list, not list of coords or take iter value simlength/timestamp
-
-def test_num():
-    globals.iter_num = globals.iter_num + 1
