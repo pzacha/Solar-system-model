@@ -18,21 +18,29 @@ def menu():
     option = input("Enter a number: ")
     if option == '1':
         # Create mass objects
-        globals.mass_list = Mass.create_mass_list(globals.mass_list)
+        globals.mass_list = Mass.create_mass_list(globals.mass_list, 1)
         # Create database with mass names
         SQL_db.create_mass_names_db(globals.mass_list)
         # Create solar database or empty existing one
         SQL_db.create_solar_db()
         # Run simulation
-        dens_iter = int(input("Enter a value for database density parameter (integer, minimum 1): "))
-        Mass.run_simulation(dens_iter)
+        db_density = int(input("Enter a value for database density parameter (integer, minimum 1): "))
+        Mass.run_simulation(db_density)
         # Return to menu
         menu()
     elif option == '2':
+        # Create mass objects
+        globals.mass_list = Mass.create_mass_list(globals.mass_list, 0)
+        # Run simulation
+        db_density = int(input("Enter a value for database density parameter (integer, minimum 1): "))
+        Mass.run_simulation(db_density)
+        # Return to menu
         menu()
     elif option == '3':
+        # Display animation
         anim_speed = int(input("Enter an animation speed (integer, minimum 1): "))
         display.display(anim_speed)
+        # Return to menu
         menu()
     elif option == '4':
         pass
@@ -42,6 +50,7 @@ def menu():
 
 menu()
 
+
 #TODO
 #1. Changing globals at the beginning of the program
-#2. Create detailed simulation but save only every tenth row (user should be able to choose).
+#2. Continuation does not work

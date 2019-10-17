@@ -12,7 +12,8 @@ def create_solar_db():
                 x FLOAT,
                 y FLOAT,
                 xvel FLOAT,
-                yvel FLOAT
+                yvel FLOAT,
+                mass CHAR
         )""")
     # Make sure database is empty
     c.execute("DELETE FROM solar_system")
@@ -47,6 +48,23 @@ def get_mass_names():
     conn.close()
     return table
 
+def get_last_row(name):
+    """Get last row of "name" object"""
+    conn = sqlite3.connect('solar_system.db')
+    c = conn.cursor()
+
+    # Load last row coords of object
+    c.execute("""SELECT sim_iter, x, y, xvel, yvel, mass 
+                FROM solar_system 
+                WHERE sim_iter = (SELECT MAX(sim_iter) FROM solar_system) AND name = (?) """, (name,))
+    table = c.fetchall()
+    table = list(table[0])
+
+    c.close()
+    conn.close()
+    return table
+
+
 def load_coords(name):
     """Load x coordinates to table and update iter_num"""
     conn = sqlite3.connect('solar_system.db')
@@ -56,7 +74,7 @@ def load_coords(name):
     c.execute("SELECT MAX(sim_iter) FROM solar_system")
     globals.iter_num = c.fetchone()[0]
 
-    # Load coords of object
+    # Load x coords of object
     c.execute("SELECT x FROM solar_system WHERE name = (?)", (name,))
     x_cor = c.fetchall()
     x_float = [i[0] for i in x_cor]
