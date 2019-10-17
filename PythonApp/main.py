@@ -18,7 +18,7 @@ def menu():
     option = input("Enter a number: ")
     if option == '1':
         # Create mass objects
-        globals.mass_list = Mass.create_mass_list(globals.mass_list, 1)
+        globals.mass_list = Mass.create_mass_list(1)
         # Create database with mass names
         SQL_db.create_mass_names_db(globals.mass_list)
         # Create solar database or empty existing one
@@ -30,7 +30,7 @@ def menu():
         menu()
     elif option == '2':
         # Create mass objects
-        globals.mass_list = Mass.create_mass_list(globals.mass_list, 0)
+        globals.mass_list = Mass.create_mass_list(0)
         # Run simulation
         db_density = int(input("Enter a value for database density parameter (integer, minimum 1): "))
         Mass.run_simulation(db_density)
@@ -50,7 +50,3 @@ def menu():
 
 menu()
 
-
-#TODO
-#1. Changing globals at the beginning of the program
-#2. Continuation does not work

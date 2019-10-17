@@ -50,8 +50,11 @@ class mass:
         self.xcor = self.xcor + self.xvel * globals.timestamp
         self.ycor = self.ycor + self.yvel * globals.timestamp
 
-def create_mass_list(list, new):
+def create_mass_list(new):
     """Create mass list"""
+
+    # Make sure mass list is empty
+    list = np.empty(0, dtype = object)
 
     if new == 1:
         earth = mass(5.972 * (10 ** 24), 149600000000, 0, 0, 30000, 0, 0, 'Earth')
@@ -85,7 +88,7 @@ def run_simulation(db_density):
     c = conn.cursor()
 
     density_iter = db_density - 1
-    sim_iter = 1
+    sim_iter = globals.iter_num + 1
     for time in range(0, globals.sim_length, globals.timestamp):
         density_iter = density_iter + 1
         for obj in globals.mass_list:
