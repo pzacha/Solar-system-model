@@ -13,6 +13,6 @@ sim_length = 31556926*2
 screen_size = 640
 max_dist = 10 ** 12
 # Random mass objects number
-rand_mass_num = 0
+rand_mass_num = 2
 # Number of simulation iterations
 iter_num = 0
