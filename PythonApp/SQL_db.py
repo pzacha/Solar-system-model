@@ -7,7 +7,7 @@ def create_solar_db():
     conn = sqlite3.connect('solar_system.db')
     c = conn.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS solar_system (
-                iter INT,
+                sim_iter INT,
                 name CHAR,
                 x FLOAT,
                 y FLOAT,
@@ -53,7 +53,7 @@ def load_coords(name):
     c = conn.cursor()
 
     # Update iter_num
-    c.execute("SELECT MAX(iter) FROM solar_system")
+    c.execute("SELECT MAX(sim_iter) FROM solar_system")
     globals.iter_num = c.fetchone()[0]
 
     # Load coords of object

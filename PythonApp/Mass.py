@@ -62,15 +62,16 @@ def create_mass_list(list):
         list = np.append(list, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1)))
     return list
 
-def run_simulation():
+def run_simulation(save_density):
     """Run simulation"""
     # Connect to database
     conn = sqlite3.connect('solar_system.db')
     c = conn.cursor()
 
-    iter = 0
+    density_iter = save_density - 1
+    sim_iter = 1
     for time in range(0, globals.sim_length, globals.timestamp):
-        iter = iter + 1
+        density_iter = density_iter + 1
         for obj in globals.mass_list:
             # Calculate accelerartions
             obj.calc_acceleration(globals.mass_list)
@@ -79,7 +80,11 @@ def run_simulation():
             obj.update_velocity_and_coordinates()
 
             # Save data in SQL database
-            c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?)", (iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel,))
+            if density_iter == save_density:
+                c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?)", (sim_iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel,))
+        if density_iter == save_density:
+            sim_iter = sim_iter + 1
+            density_iter = 0
 
     # Commit changes and close connection
     conn.commit()

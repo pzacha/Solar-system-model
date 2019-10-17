@@ -24,14 +24,15 @@ def menu():
         # Create solar database or empty existing one
         SQL_db.create_solar_db()
         # Run simulation
-        Mass.run_simulation()
+        dens_iter = int(input("Enter a value for database density parameter (integer, minimum 1): "))
+        Mass.run_simulation(dens_iter)
         # Return to menu
         menu()
     elif option == '2':
         menu()
     elif option == '3':
-        freq_param = 10#int(input("Enter a display frequency parameter: "))
-        display.display(freq_param)
+        anim_speed = int(input("Enter an animation speed (integer, minimum 1): "))
+        display.display(anim_speed)
         menu()
     elif option == '4':
         pass
@@ -43,5 +44,4 @@ menu()
 
 #TODO
 #1. Changing globals at the beginning of the program
-
 #2. Create detailed simulation but save only every tenth row (user should be able to choose).
