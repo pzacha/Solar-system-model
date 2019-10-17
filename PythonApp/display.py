@@ -1,49 +1,59 @@
-import sqlite3
+import numpy as np
 import pygame
+import globals
+import SQL_db
 
 def norm_coords(coord):
-    """ Adjust coordinates to screen (0,0) = middle of the screen """
+    """Adjust coordinates to screen (0,0) = middle of the screen"""
     if coord == 0:
         # Middle of the screen
-        coord = screen_size/2
+        coord = globals.screen_size/2
     elif coord >= 0:
         # Right/top side of the screen
         # If absolute distance is bigger than max_dist show the planet on the edge of the screen
-        if abs(coord) > max_dist:
-            coord = screen_size
+        if abs(coord) > globals.max_dist:
+            coord = globals.screen_size
         else:
-            coord = screen_size/2 + coord/max_dist*screen_size/2
+            coord = globals.screen_size/2 + coord/globals.max_dist*globals.screen_size/2
     else:
         # Left/bottom side of the screen
         # If absolute distance is bigger than max_dist show the planet on the edge of the screen
-        if abs(coord) > max_dist:
+        if abs(coord) > globals.max_dist:
             # If distance is bigger than max_dist show the planet on the edge of the screen
             coord = 0
         else:           
-            coord = screen_size/2 - abs(coord)/max_dist*screen_size/2       
+            coord = globals.screen_size/2 - abs(coord)/globals.max_dist*globals.screen_size/2       
     return int(round(coord))
 
-# Animation
-pygame.init()
-screen = pygame.display.set_mode((screen_size,screen_size))
-pygame.display.update()
-
-# Variable for screen refresh frequency
-iter = 0 
-
-# Update screen and reset iter variable
-
-if iter == 1000:
+def display(anim_speed):
+    """Display solar system animation"""
+    
+    # animation
+    pygame.init()
+    screen = pygame.display.set_mode((globals.screen_size, globals.screen_size))
     pygame.display.update()
-    screen.fill((0,0,0))
-    iter = 0
-iter = iter + 1
 
-# Update screen every iter iterations
-if iter == 1000:
-    if obj == sun:
-        pygame.draw.circle(screen, (255,255,0), (norm_coords(sun.xcor),norm_coords(sun.ycor)), 10)
-    elif obj == earth:
-        pygame.draw.circle(screen, (0,255,0), (norm_coords(obj.xcor),norm_coords(obj.ycor)), 4)
-    else:
-        pygame.draw.circle(screen, (255,255,255), (norm_coords(obj.xcor),norm_coords(obj.ycor)), 3)
+    # variable for screen refresh frequency
+    anim_iter = 0
+
+    # Get table wit coords
+    coords_table = SQL_db.create_coords_table()
+
+    for i in range(globals.iter_num):
+        if anim_iter == anim_speed:
+            pygame.display.update()
+            screen.fill((0,0,0))
+            anim_iter = 0
+        # update screen and reset freq variable        
+        anim_iter = anim_iter + 1
+        # update screen every iter iterations
+        if anim_iter == anim_speed:
+            for num in range(globals.rand_mass_num + 2):
+                pygame.draw.circle(screen, (255,255,255), (norm_coords(coords_table[i + globals.iter_num * 2 * num]),norm_coords(coords_table[i + globals.iter_num + globals.iter_num * 2 * num])), 3)
+                
+        # Below code is added in order to prevent pygame crash
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT: 
+                exit(0)
+    pygame.display.quit()
+    pygame.QUIT

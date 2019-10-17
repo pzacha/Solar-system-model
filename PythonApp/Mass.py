@@ -2,18 +2,9 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 import random
-
-# Gravitational constant
-grav_const = 6.674 * 10**(-11)
-# Global mass list
-mass_list = np.empty(0, dtype = object)
-# Timestamp
-timestamp = 3600
-# Simulation length (in seconds) -> 2 years
-sim_length = 31556926*2
-# Screen max width and height (screen is square)
-screen_size = 640
-max_dist = 10 ** 12
+import globals
+import sqlite3
+import SQL_db
 
 class mass:
     """Mass (mass, xcor, ycor, xvel, yvel, xacc, yacc)"""
@@ -35,9 +26,8 @@ class mass:
         return [radius_x, radius_y, radius]
 
     def calc_force(self, obj):
-
         [radius_x, radius_y, radius] = self.calc_radius(obj)
-        force = grav_const * self.mass * obj.mass / (radius ** 2)
+        force = globals.grav_const * self.mass * obj.mass / (radius ** 2)
         force_x = force * (radius_x / radius)
         force_y = force * (radius_y / radius)
         return [force_x, force_y]
@@ -54,20 +44,69 @@ class mass:
         self.xacc = sum_force_x / self.mass
         self.yacc = sum_force_y / self.mass
 
-
     def update_velocity_and_coordinates(self):
-        self.xvel = self.xvel + self.xacc * timestamp
-        self.yvel = self.yvel + self.yacc * timestamp
-        self.xcor = self.xcor + self.xvel * timestamp
-        self.ycor = self.ycor + self.yvel * timestamp
-def create_mass_list(list):
+        self.xvel = self.xvel + self.xacc * globals.timestamp
+        self.yvel = self.yvel + self.yacc * globals.timestamp
+        self.xcor = self.xcor + self.xvel * globals.timestamp
+        self.ycor = self.ycor + self.yvel * globals.timestamp
+
+def create_mass_list(new):
+    """Create mass list"""
+
+    # Make sure mass list is empty
+    list = np.empty(0, dtype = object)
+
+    if new == 1:
+        earth = mass(5.972 * (10 ** 24), 149600000000, 0, 0, 30000, 0, 0, 'Earth')
+        sun = mass(1.989 * (10 ** 30), 0, 0, 0, 0, 0, 0, 'Sun')
+
+        # Add Sun and Earth
+        list = np.append(list, [sun, earth])
+
+        # Add random objects
+        for i in range(globals.rand_mass_num):
+            list = np.append(list, mass(random.randint(10 ** 15,10 ** 23), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1)))
+        return list
+
+    else:
+        globals.iter_num = SQL_db.get_last_row('Sun')[0]
+        earth = mass(5.972 * (10 ** 24), SQL_db.get_last_row('Earth')[1], SQL_db.get_last_row('Earth')[2], SQL_db.get_last_row('Earth')[3], SQL_db.get_last_row('Earth')[4], 0, 0, 'Earth')
+        sun = mass(1.989 * (10 ** 30), SQL_db.get_last_row('Sun')[1], SQL_db.get_last_row('Sun')[2], SQL_db.get_last_row('Sun')[3], SQL_db.get_last_row('Sun')[4], 0, 0, 'Sun')
     
-    earth = mass(5.972 * (10 ** 24), 149600000000, 0, 0, 30000, 0, 0, 'Earth')
-    sun = mass(1.989 * (10 ** 30), 0, 0, 0, 0, 0, 0, 'Sun')
-    
-    # Add Sun and Earth
-    list = np.append(list, [sun, earth])
-    # Add random objects
-    for i in range(0):
-        list = np.append(list, mass(random.randint(10 ** 15,10 ** 20), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object'))
-    return list
+        # Add Sun and Earth
+        list = np.append(list, [sun, earth])
+
+        # Add random objects
+        for i in range(globals.rand_mass_num):
+            list = np.append(list, mass(float(SQL_db.get_last_row('Object' + str(i + 1))[5]), SQL_db.get_last_row('Object' + str(i + 1))[1], SQL_db.get_last_row('Object' + str(i + 1))[2], SQL_db.get_last_row('Object' + str(i + 1))[3], SQL_db.get_last_row('Object' + str(i + 1))[4], 0, 0, 'Object' + str(i + 1)))
+        return list
+
+def run_simulation(db_density):
+    """Run simulation"""
+    # Connect to database
+    conn = sqlite3.connect('solar_system.db')
+    c = conn.cursor()
+
+    density_iter = db_density - 1
+    sim_iter = globals.iter_num + 1
+    for time in range(0, globals.sim_length, globals.timestamp):
+        density_iter = density_iter + 1
+        for obj in globals.mass_list:
+            # Calculate accelerartions
+            obj.calc_acceleration(globals.mass_list)
+
+            # Update properties of each planet
+            obj.update_velocity_and_coordinates()
+
+            # Save data in SQL database
+            if density_iter == db_density:
+                c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?, ?)", (sim_iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel, str(obj.mass),))
+        if density_iter == db_density:
+            sim_iter = sim_iter + 1
+            density_iter = 0
+
+    # Commit changes and close connection
+    conn.commit()
+    c.close()
+    conn.close()
+    print("Simulation finished")
