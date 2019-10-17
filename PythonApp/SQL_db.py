@@ -14,25 +14,12 @@ def create_solar_db():
                 xvel FLOAT,
                 yvel FLOAT
         )""")
-    c.close()
-    conn.close()
-
-def commit_and_close(c, conn):
-    """Commit changes and close connection"""
+    # Make sure database is empty
+    c.execute("DELETE FROM solar_system")
+    # Close connection
     conn.commit()
     c.close()
     conn.close()
-
-def connect(start_new):
-    """Connect to solar system database"""
-    conn = sqlite3.connect('solar_system.db')
-    c = conn.cursor()
-    if start_new == 1:
-        #c.execute("INSERT INTO solar_system VALUES (0, Earth , 149600000000, 0, 0, 30000)")
-        c.execute("DELETE FROM solar_system")
-    #else:
-        # Add last row values (iter and coords)
-    return [c, conn]
 
 def create_mass_names_db(mass_list):
     """SQL mass_name database creation"""

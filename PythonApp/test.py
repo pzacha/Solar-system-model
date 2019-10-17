@@ -21,6 +21,6 @@ import display
 
 #display.display(table)
 
-display.display()
+display.display(1)
 
 

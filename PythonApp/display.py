@@ -1,5 +1,4 @@
 import numpy as np
-import sqlite3
 import pygame
 import globals
 import SQL_db
@@ -26,7 +25,7 @@ def norm_coords(coord):
             coord = globals.screen_size/2 - abs(coord)/globals.max_dist*globals.screen_size/2       
     return int(round(coord))
 
-def display():
+def display(freq_param):
     """Display solar system animation"""
     
     # animation
@@ -41,18 +40,20 @@ def display():
     coords_table = SQL_db.create_coords_table()
 
     for i in range(globals.iter_num):
-        if freq == 1000:
+        if freq == freq_param:
             pygame.display.update()
             screen.fill((0,0,0))
             freq = 0
         # update screen and reset freq variable        
         freq = freq + 1
         # update screen every iter iterations
-        if freq == 1000:
+        if freq == freq_param:
             for num in range(globals.rand_mass_num + 2):
-                pygame.draw.circle(screen, (255,255,255), (norm_coords(coords_table[i + globals.iter_num * num]),norm_coords(coords_table[i + globals.iter_num + globals.iter_num * num])), 3)
+                pygame.draw.circle(screen, (255,255,255), (norm_coords(coords_table[i + globals.iter_num * 2 * num]),norm_coords(coords_table[i + globals.iter_num + globals.iter_num * 2 * num])), 3)
                 
         # Below code is added in order to prevent pygame crash
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
                 exit(0)
+    pygame.display.quit()
+    pygame.QUIT
