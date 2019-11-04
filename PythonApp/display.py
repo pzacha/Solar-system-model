@@ -49,8 +49,12 @@ def display(anim_speed):
         # update screen every iter iterations
         if anim_iter == anim_speed:
             for num in range(globals.rand_mass_num + 2):
-                pygame.draw.circle(screen, (255,255,255), (norm_coords(coords_table[i + globals.iter_num * 2 * num]),norm_coords(coords_table[i + globals.iter_num + globals.iter_num * 2 * num])), 3)
-                
+                # Make the sun yellow and big
+                if num == 0:
+                    pygame.draw.circle(screen, (255,255,0), (norm_coords(coords_table[i + globals.iter_num * 2 * num]), norm_coords(coords_table[i + globals.iter_num + globals.iter_num * 2 * num])), 6)
+                else:
+                    pygame.draw.circle(screen, (255,255,255), (norm_coords(coords_table[i + globals.iter_num * 2 * num]), norm_coords(coords_table[i + globals.iter_num + globals.iter_num * 2 * num])), 3)
+               
         # Below code is added in order to prevent pygame crash
         for event in pygame.event.get():
             if event.type == pygame.QUIT: 
