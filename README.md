@@ -5,7 +5,10 @@
 2D Solar system simulator. It uses Euler method to estimate location and velocity of objects. The purpose of the project was to improve python skills - especially Numpy and SQLite libraries.
 
 ## Screenshots
+User menu with available options.
 ![Menu](./img/menu.png)
+
+Snap from animation.
 ![Animation](./img/animation.png)
 
 ## Technologies
