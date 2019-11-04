@@ -5,8 +5,8 @@
 2D Solar system simulator. It uses Euler method to estimate location and velocity of objects. The purpose of the project was to improve python skills - especially Numpy and SQLite libraries.
 
 ## Screenshots
-![Menu](https://github.com/pzacha/Simple-gravity-simulator/img/menu.png)
-![Animation](https://github.com/pzacha/Simple-gravity-simulator/img/animation.png)
+![Menu](./img/menu.png)
+![Animation](./img/animation.png)
 
 ## Technologies
 * numpy
