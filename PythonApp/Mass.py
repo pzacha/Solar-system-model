@@ -107,7 +107,7 @@ def run_simulation(db_density):
 
             # Save data in SQL database
             if density_iter == db_density:
-                c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?, ?)", (sim_iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel, str(obj.mass),))
+                c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (sim_iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel, str(obj.mass), obj.diameter,))
         if density_iter == db_density:
             sim_iter = sim_iter + 1
             density_iter = 0

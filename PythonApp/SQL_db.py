@@ -13,7 +13,8 @@ def create_solar_db():
                 y FLOAT,
                 xvel FLOAT,
                 yvel FLOAT,
-                mass CHAR
+                mass CHAR,
+                diameter FLOAT
         )""")
     # Make sure database is empty
     c.execute("DELETE FROM solar_system")
