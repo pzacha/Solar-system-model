@@ -72,20 +72,20 @@ def create_mass_list(new):
 
         # Add random objects
         for i in range(globals.rand_mass_num):
-            list = np.append(list, mass(random.randint(10 ** 15,10 ** 23), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1)), 3)
+            list = np.append(list, mass(random.randint(10 ** 15,10 ** 23), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1), 1))
         return list
 
     else:
         globals.iter_num = SQL_db.get_last_row('Sun')[0]
-        earth = mass(5.972 * (10 ** 24), SQL_db.get_last_row('Earth')[1], SQL_db.get_last_row('Earth')[2], SQL_db.get_last_row('Earth')[3], SQL_db.get_last_row('Earth')[4], 0, 0, 'Earth')
-        sun = mass(1.989 * (10 ** 30), SQL_db.get_last_row('Sun')[1], SQL_db.get_last_row('Sun')[2], SQL_db.get_last_row('Sun')[3], SQL_db.get_last_row('Sun')[4], 0, 0, 'Sun')
+        earth = mass(5.972 * (10 ** 24), SQL_db.get_last_row('Earth')[1], SQL_db.get_last_row('Earth')[2], SQL_db.get_last_row('Earth')[3], SQL_db.get_last_row('Earth')[4], 0, 0, 'Earth', 3)
+        sun = mass(1.989 * (10 ** 30), SQL_db.get_last_row('Sun')[1], SQL_db.get_last_row('Sun')[2], SQL_db.get_last_row('Sun')[3], SQL_db.get_last_row('Sun')[4], 0, 0, 'Sun', 10)
     
         # Add Sun and Earth
         list = np.append(list, [sun, earth])
 
         # Add random objects
         for i in range(globals.rand_mass_num):
-            list = np.append(list, mass(float(SQL_db.get_last_row('Object' + str(i + 1))[5]), SQL_db.get_last_row('Object' + str(i + 1))[1], SQL_db.get_last_row('Object' + str(i + 1))[2], SQL_db.get_last_row('Object' + str(i + 1))[3], SQL_db.get_last_row('Object' + str(i + 1))[4], 0, 0, 'Object' + str(i + 1)))
+            list = np.append(list, mass(float(SQL_db.get_last_row('Object' + str(i + 1))[5]), SQL_db.get_last_row('Object' + str(i + 1))[1], SQL_db.get_last_row('Object' + str(i + 1))[2], SQL_db.get_last_row('Object' + str(i + 1))[3], SQL_db.get_last_row('Object' + str(i + 1))[4], 0, 0, 'Object' + str(i + 1), 1))
         return list
 
 def run_simulation(db_density):
