@@ -1,6 +1,5 @@
 import numpy as np
 import math
-import matplotlib.pyplot as plt
 import random
 import globals
 import sqlite3
@@ -9,7 +8,7 @@ import SQL_db
 class mass:
     """Mass (mass, xcor, ycor, xvel, yvel, xacc, yacc)"""
 
-    def __init__(self, mass, xcor, ycor, xvel, yvel, xacc, yacc, name):
+    def __init__(self, mass, xcor, ycor, xvel, yvel, xacc, yacc, name, diameter):
         self.mass = mass
         self.xcor = xcor
         self.ycor = ycor
@@ -18,6 +17,7 @@ class mass:
         self.xacc = xacc
         self.yacc = yacc
         self.name = name
+        self.diameter = diameter
 
     def calc_radius(self, obj):
         radius_x = obj.xcor - self.xcor
@@ -57,15 +57,22 @@ def create_mass_list(new):
     list = np.empty(0, dtype = object)
 
     if new == 1:
-        earth = mass(5.972 * (10 ** 24), 149600000000, 0, 0, 30000, 0, 0, 'Earth')
-        sun = mass(1.989 * (10 ** 30), 0, 0, 0, 0, 0, 0, 'Sun')
+        sun = mass(1.989 * (10 ** 30), 0, 0, 0, 0, 0, 0, 'Sun', 10)
+        # mercury = mass(0.330 * (10 ** 24), 57.9 * (10 ** 6), 0, 0, 47400, 0, 0, 'Mercury', 1)
+        # venus = mass(4.87 * (10 ** 24), 108.2 * (10 ** 6), 0, 0, 35000, 0, 0, 'Venus', 3)
+        earth = mass(5.972 * (10 ** 24), 149.6 * (10 ** 6), 0, 0, 29800, 0, 0, 'Earth', 3)
+        # mars = mass(0.642 * (10 ** 24), 227.9 * (10 ** 6), 0, 0, 24100, 0, 0, 'Mars', 2)
+        # jupiter = mass(1898 * (10 ** 24), 778.6 * (10 ** 6), 0, 0, 13100, 0, 0, 'Jupiter', 7)
+        # saturn = mass(568 * (10 ** 24), 1433.5 * (10 ** 6), 0, 0, 9700, 0, 0, 'Saturn', 6)
+        # uranus = mass(86.8 * (10 ** 24), 2872.5 * (10 ** 6), 0, 0, 6800, 0, 0, 'Uranus', 5)
+        # neptune = mass(102 * (10 ** 24), 4495.1 * (10 ** 6), 0, 0, 5400, 0, 0, 'Neptune', 5)
 
         # Add Sun and Earth
         list = np.append(list, [sun, earth])
 
         # Add random objects
         for i in range(globals.rand_mass_num):
-            list = np.append(list, mass(random.randint(10 ** 15,10 ** 23), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1)))
+            list = np.append(list, mass(random.randint(10 ** 15,10 ** 23), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 11,10 ** 11), random.randint(-10 ** 4,10 ** 4), random.randint(-10 ** 4,10 ** 4), 0, 0, 'Object' + str(i + 1)), 3)
         return list
 
     else:
