@@ -8,7 +8,7 @@ import SQL_db
 class mass:
     """Mass (mass, xcor, ycor, xvel, yvel, xacc, yacc)"""
 
-    def __init__(self, mass, xcor, ycor, xvel, yvel, xacc, yacc, name, diameter):
+    def __init__(self, mass, xcor, ycor, xvel, yvel, xacc, yacc, name):
         self.mass = mass
         self.xcor = xcor
         self.ycor = ycor
@@ -17,7 +17,6 @@ class mass:
         self.xacc = xacc
         self.yacc = yacc
         self.name = name
-        self.diameter = diameter
 
     def calc_radius(self, obj):
         radius_x = obj.xcor - self.xcor
@@ -57,15 +56,15 @@ def create_mass_list(new):
     list = np.empty(0, dtype = object)
 
     if new == 1:
-        sun = mass(1.989 * (10 ** 30), 0, 0, 0, 0, 0, 0, 'Sun', 10)
-        # mercury = mass(0.330 * (10 ** 24), 57.9 * (10 ** 9), 0, 0, 47400, 0, 0, 'Mercury', 1)
-        # venus = mass(4.87 * (10 ** 24), 108.2 * (10 ** 9), 0, 0, 35000, 0, 0, 'Venus', 3)
-        earth = mass(5.972 * (10 ** 24), 149.6 * (10 ** 9), 0, 0, 29800, 0, 0, 'Earth', 3)
-        # mars = mass(0.642 * (10 ** 24), 227.9 * (10 ** 9), 0, 0, 24100, 0, 0, 'Mars', 2)
-        # jupiter = mass(1898 * (10 ** 24), 778.6 * (10 ** 9), 0, 0, 13100, 0, 0, 'Jupiter', 7)
-        # saturn = mass(568 * (10 ** 24), 1433.5 * (10 ** 9), 0, 0, 9700, 0, 0, 'Saturn', 6)
-        # uranus = mass(86.8 * (10 ** 24), 2872.5 * (10 ** 9), 0, 0, 6800, 0, 0, 'Uranus', 5)
-        # neptune = mass(102 * (10 ** 24), 4495.1 * (10 ** 9), 0, 0, 5400, 0, 0, 'Neptune', 5)
+        sun = mass(1.989 * (10 ** 30), 0, 0, 0, 0, 0, 0, 'Sun')
+        # mercury = mass(0.330 * (10 ** 24), 57.9 * (10 ** 9), 0, 0, 47400, 0, 0, 'Mercury')
+        # venus = mass(4.87 * (10 ** 24), 108.2 * (10 ** 9), 0, 0, 35000, 0, 0, 'Venus')
+        earth = mass(5.972 * (10 ** 24), 149.6 * (10 ** 9), 0, 0, 29800, 0, 0, 'Earth')
+        # mars = mass(0.642 * (10 ** 24), 227.9 * (10 ** 9), 0, 0, 24100, 0, 0, 'Mars')
+        # jupiter = mass(1898 * (10 ** 24), 778.6 * (10 ** 9), 0, 0, 13100, 0, 0, 'Jupiter')
+        # saturn = mass(568 * (10 ** 24), 1433.5 * (10 ** 9), 0, 0, 9700, 0, 0, 'Saturn')
+        # uranus = mass(86.8 * (10 ** 24), 2872.5 * (10 ** 9), 0, 0, 6800, 0, 0, 'Uranus')
+        # neptune = mass(102 * (10 ** 24), 4495.1 * (10 ** 9), 0, 0, 5400, 0, 0, 'Neptune')
 
         # Add Sun and Earth
         list = np.append(list, [sun, earth])
@@ -77,15 +76,15 @@ def create_mass_list(new):
 
     else:
         globals.iter_num = SQL_db.get_last_row('Sun')[0]
-        sun = mass(1.989 * (10 ** 30), SQL_db.get_last_row('Sun')[1], SQL_db.get_last_row('Sun')[2], SQL_db.get_last_row('Sun')[3], SQL_db.get_last_row('Sun')[4], 0, 0, 'Sun', SQL_db.get_last_row('Sun')[6])
-        # mercury = mass(0.330 * (10 ** 24), SQL_db.get_last_row('Mercury')[1], SQL_db.get_last_row('Mercury')[2], SQL_db.get_last_row('Mercury')[3], SQL_db.get_last_row('Mercury')[4], 0, 0, 'Mercury', SQL_db.get_last_row('Mercury')[6])
-        # venus = mass(4.87 * (10 ** 24), SQL_db.get_last_row('Venus')[1], SQL_db.get_last_row('Venus')[2], SQL_db.get_last_row('Venus')[3], SQL_db.get_last_row('Venus')[4], 0, 0, 'Venus', SQL_db.get_last_row('Venus')[6])
-        earth = mass(5.972 * (10 ** 24), SQL_db.get_last_row('Earth')[1], SQL_db.get_last_row('Earth')[2], SQL_db.get_last_row('Earth')[3], SQL_db.get_last_row('Earth')[4], 0, 0, 'Earth', SQL_db.get_last_row('Earth')[6])
-        # mars = mass(0.642 * (10 ** 24), SQL_db.get_last_row('Mars')[1], SQL_db.get_last_row('Mars')[2], SQL_db.get_last_row('Mars')[3], SQL_db.get_last_row('Mars')[4], 0, 0, 'Mars', SQL_db.get_last_row('Mars')[6])
-        # jupiter = mass(1898 * (10 ** 24), SQL_db.get_last_row('Jupiter')[1], SQL_db.get_last_row('Jupiter')[2], SQL_db.get_last_row('Jupiter')[3], SQL_db.get_last_row('Jupiter')[4], 0, 0, 'Jupiter', SQL_db.get_last_row('Jupiter')[6])
-        # saturn = mass(568 * (10 ** 24), SQL_db.get_last_row('Saturn')[1], SQL_db.get_last_row('Saturn')[2], SQL_db.get_last_row('Saturn')[3], SQL_db.get_last_row('Saturn')[4], 0, 0, 'Saturn', SQL_db.get_last_row('Saturn')[6])
-        # uranus = mass(86.8 * (10 ** 24), SQL_db.get_last_row('Uranus')[1], SQL_db.get_last_row('Uranus')[2], SQL_db.get_last_row('Uranus')[3], SQL_db.get_last_row('Uranus')[4], 0, 0, 'Uranus', SQL_db.get_last_row('Uranus')[6])
-        # neptune = mass(102 * (10 ** 24), SQL_db.get_last_row('Neptune')[1], SQL_db.get_last_row('Neptune')[2], SQL_db.get_last_row('Neptune')[3], SQL_db.get_last_row('Neptune')[4], 0, 0, 'Neptune', SQL_db.get_last_row('Neptune')[6])
+        sun = mass(1.989 * (10 ** 30), SQL_db.get_last_row('Sun')[1], SQL_db.get_last_row('Sun')[2], SQL_db.get_last_row('Sun')[3], SQL_db.get_last_row('Sun')[4], 0, 0, 'Sun')
+        # mercury = mass(0.330 * (10 ** 24), SQL_db.get_last_row('Mercury')[1], SQL_db.get_last_row('Mercury')[2], SQL_db.get_last_row('Mercury')[3], SQL_db.get_last_row('Mercury')[4], 0, 0, 'Mercury')
+        # venus = mass(4.87 * (10 ** 24), SQL_db.get_last_row('Venus')[1], SQL_db.get_last_row('Venus')[2], SQL_db.get_last_row('Venus')[3], SQL_db.get_last_row('Venus')[4], 0, 0, 'Venus')
+        earth = mass(5.972 * (10 ** 24), SQL_db.get_last_row('Earth')[1], SQL_db.get_last_row('Earth')[2], SQL_db.get_last_row('Earth')[3], SQL_db.get_last_row('Earth')[4], 0, 0, 'Earth')
+        # mars = mass(0.642 * (10 ** 24), SQL_db.get_last_row('Mars')[1], SQL_db.get_last_row('Mars')[2], SQL_db.get_last_row('Mars')[3], SQL_db.get_last_row('Mars')[4], 0, 0, 'Mars')
+        # jupiter = mass(1898 * (10 ** 24), SQL_db.get_last_row('Jupiter')[1], SQL_db.get_last_row('Jupiter')[2], SQL_db.get_last_row('Jupiter')[3], SQL_db.get_last_row('Jupiter')[4], 0, 0, 'Jupiter')
+        # saturn = mass(568 * (10 ** 24), SQL_db.get_last_row('Saturn')[1], SQL_db.get_last_row('Saturn')[2], SQL_db.get_last_row('Saturn')[3], SQL_db.get_last_row('Saturn')[4], 0, 0, 'Saturn')
+        # uranus = mass(86.8 * (10 ** 24), SQL_db.get_last_row('Uranus')[1], SQL_db.get_last_row('Uranus')[2], SQL_db.get_last_row('Uranus')[3], SQL_db.get_last_row('Uranus')[4], 0, 0, 'Uranus')
+        # neptune = mass(102 * (10 ** 24), SQL_db.get_last_row('Neptune')[1], SQL_db.get_last_row('Neptune')[2], SQL_db.get_last_row('Neptune')[3], SQL_db.get_last_row('Neptune')[4], 0, 0, 'Neptune')
     
         # Add Sun and Earth
         list = np.append(list, [sun, earth])
@@ -114,7 +113,7 @@ def run_simulation(db_density):
 
             # Save data in SQL database
             if density_iter == db_density:
-                c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (sim_iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel, str(obj.mass), obj.diameter,))
+                c.execute("INSERT INTO solar_system VALUES (?, ?, ?, ?, ?, ?, ?)", (sim_iter, obj.name, obj.xcor, obj.ycor, obj.xvel, obj.yvel, str(obj.mass),))
         if density_iter == db_density:
             sim_iter = sim_iter + 1
             density_iter = 0

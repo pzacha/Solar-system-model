@@ -13,8 +13,7 @@ def create_solar_db():
                 y FLOAT,
                 xvel FLOAT,
                 yvel FLOAT,
-                mass CHAR,
-                diameter FLOAT
+                mass CHAR
         )""")
     # Make sure database is empty
     c.execute("DELETE FROM solar_system")
@@ -55,7 +54,7 @@ def get_last_row(name):
     c = conn.cursor()
 
     # Load last row coords of object
-    c.execute("""SELECT sim_iter, x, y, xvel, yvel, mass, diameter 
+    c.execute("""SELECT sim_iter, x, y, xvel, yvel, mass
                 FROM solar_system 
                 WHERE sim_iter = (SELECT MAX(sim_iter) FROM solar_system) AND name = (?) """, (name,))
     table = c.fetchall()
@@ -95,6 +94,3 @@ def create_coords_table():
     for name in names:
         coords_table = np.append(coords_table, load_coords(name))
     return coords_table
-
-# TODO
-#1. Create list of list, not list of coords or take iter value simlength/timestamp
