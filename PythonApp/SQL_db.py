@@ -50,12 +50,12 @@ def get_mass_names():
     return table
 
 def get_last_row(name):
-    """Get last row of "name" object"""
+    """Get last row of 'name' object (does not include 'name' column)"""
     conn = sqlite3.connect('solar_system.db')
     c = conn.cursor()
 
     # Load last row coords of object
-    c.execute("""SELECT sim_iter, x, y, xvel, yvel, mass 
+    c.execute("""SELECT sim_iter, x, y, xvel, yvel, mass, diameter 
                 FROM solar_system 
                 WHERE sim_iter = (SELECT MAX(sim_iter) FROM solar_system) AND name = (?) """, (name,))
     table = c.fetchall()
