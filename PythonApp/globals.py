@@ -10,8 +10,8 @@ timestamp = 10
 # Simulation length (in seconds) -> 1 years
 sim_length = 31556926*1
 # Screen max width and height (screen is square)
-screen_size = 640
-max_dist = 10 ** 12
+screen_size = 1280
+max_dist = (10 ** 12) * 5
 # Random mass objects number
 rand_mass_num = 0
 # Number of simulation iterations
