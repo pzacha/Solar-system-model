@@ -12,7 +12,7 @@ sim_length = 31556926*1
 # Screen max width and height (screen is square)
 screen_size_x = 1920
 screen_size_y = 1080
-max_dist = (10 ** 12) * 5
+max_dist = (10 ** 12) * 6
 # Random mass objects number
 rand_mass_num = 0
 # Number of simulation iterations

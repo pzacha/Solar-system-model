@@ -34,7 +34,6 @@ def display(anim_speed):
     
     # animation
     pygame.init()
-    #screen = pygame.display.set_mode((globals.screen_size, globals.screen_size))
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     pygame.display.update()
 
