@@ -26,7 +26,6 @@ Snap from animation.
 
 ## TODO
 List of features ready and TODOs for future development
-* Add all planets.
 * Option to slow down animation
 * Add GUI.
 * Allow user to change globals from  GUI.
