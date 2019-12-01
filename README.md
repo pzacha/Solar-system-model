@@ -9,6 +9,7 @@ User menu with available options.
 ![Menu](./img/menu.png)
 
 Animation:
+
 ![Recordit GIF](http://g.recordit.co/j77SYFvqbO.gif)
 
 ## Technologies
