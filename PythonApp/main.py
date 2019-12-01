@@ -3,8 +3,8 @@ import math
 import sqlite3
 import random
 import globals
-import SQL_db
-import Mass
+import database
+import mass
 import display
 
 def menu():
@@ -17,22 +17,22 @@ def menu():
     option = input("Enter a number: ")
     if option == '1':
         # Create mass objects
-        globals.mass_list = Mass.create_mass_list(1)
+        globals.mass_list = mass.create_mass_list(1)
         # Create database with mass names
-        SQL_db.create_mass_names_db(globals.mass_list)
+        database.create_mass_names_db(globals.mass_list)
         # Create solar database or empty existing one
-        SQL_db.create_solar_db()
+        database.create_solar_db()
         # Run simulation
         db_density = int(input("Enter a value for database density parameter (integer, minimum 1): "))
-        Mass.run_simulation(db_density)
+        mass.run_simulation(db_density)
         # Return to menu
         menu()
     elif option == '2':
         # Create mass objects
-        globals.mass_list = Mass.create_mass_list(0)
+        globals.mass_list = mass.create_mass_list(0)
         # Run simulation
         db_density = int(input("Enter a value for database density parameter (integer, minimum 1): "))
-        Mass.run_simulation(db_density)
+        mass.run_simulation(db_density)
         # Return to menu
         menu()
     elif option == '3':

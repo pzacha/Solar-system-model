@@ -1,7 +1,7 @@
 import numpy as np
 import pygame
 import globals
-import SQL_db
+import database
 
 def norm_coords_x(xcor):
     """Adjust x axis coordinates to screen. 0 = middle of the screen"""
@@ -41,7 +41,7 @@ def display(anim_speed):
     anim_iter = 0
 
     # Get table wit coords
-    coords_table = SQL_db.create_coords_table()
+    coords_table = database.create_coords_table()
 
     for i in range(globals.iter_num):
         if anim_iter == anim_speed:
