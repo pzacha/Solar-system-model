@@ -11,6 +11,9 @@ User menu with available options.
 Snap from animation.
 ![Animation](./img/animation.png)
 
+Animation:
+![Recordit GIF](https://recordit.co/j77SYFvqbO)
+
 ## Technologies
 * numpy
 * sqlite3
