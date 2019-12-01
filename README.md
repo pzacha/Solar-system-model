@@ -8,11 +8,8 @@
 User menu with available options.
 ![Menu](./img/menu.png)
 
-Snap from animation.
-![Animation](./img/animation.png)
-
 Animation:
-![Recordit GIF](https://recordit.co/j77SYFvqbO)
+![Recordit GIF](http://g.recordit.co/j77SYFvqbO.gif)
 
 ## Technologies
 * numpy
