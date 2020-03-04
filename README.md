@@ -1,8 +1,8 @@
-# Project Name
-> Simple 2D solar system simulator.
+# Solar system model
+> 2D gravitational model of solar system.
 
 ## General info
-2D Solar system simulator. It uses Euler method to estimate location and velocity of objects.
+Gravitational model of the solar system. Uses the Euler method to estimate the position and velocity of objects.
 
 ## Screenshots
 User menu with available options.
@@ -27,7 +27,7 @@ Animation:
 
 ## TODO
 List of features ready and TODOs for future development
-* Option to slow down animation
+* Option to slow down animation.
 * Add GUI.
 * Allow user to change globals from  GUI.
 * Expand project to third dimension.
