@@ -27,6 +27,7 @@ Animation:
 
 ## TODO
 List of features ready and TODOs for future development
+* Add tests.
 * Option to slow down animation.
 * Add GUI.
 * Allow user to change globals from  GUI.
